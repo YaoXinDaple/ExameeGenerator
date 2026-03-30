@@ -6,7 +6,7 @@ namespace ExameeGenerator.Domain
     {
         private Examee() { }
 
-        public Examee(Guid id,int numer,int order) : base(id)
+        public Examee(Guid id,Guid  examId,int numer,int order) : base(id)
         {
             Number = numer;
             Order = order;
@@ -15,6 +15,8 @@ namespace ExameeGenerator.Domain
         public int Number { get; private set; }
 
         public int Order { get; private set; }
+
+        public Guid ExamId { get; init; }
 
         internal void UpdateOrder(int order)
         { 

@@ -10,8 +10,10 @@ namespace ExameeGenerator.Domain.Shared
 
         private ICollection<DomainEventRecord> _domainEvents = new Collection<DomainEventRecord>();
         public DateTime CreateAt { get; init; }
-        public DateTime UpdateAt { get; private set; }
+        public DateTime? UpdateAt { get; private set; }
         public DateTime? DeleteTime { get; private set; }
+
+        public byte[] Version { get; private set; }
 
         protected virtual void RaiseEvent(DomainEventRecord record)
         { 
