@@ -10,7 +10,7 @@ namespace ExameeGenerator.Application.Dtos
             {
                 Id = exam.Id,
                 Name = exam.Name,
-                ExameeDtos = exam.Examees.ToDtos(),
+                ExameeDtos = exam.Examees.OrderBy(e=>e.Order).ToDtos(),
             };
         }
     }

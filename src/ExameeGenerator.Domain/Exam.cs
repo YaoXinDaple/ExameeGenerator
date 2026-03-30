@@ -14,6 +14,7 @@ namespace ExameeGenerator.Domain
                 throw new ValidationException(nameof(Name), "exam name cannot be empty");
             }
             Name = name;
+            CreateAt = DateTime.Now;
         }
 
         public string Name { get; private set; } = string.Empty;
@@ -35,13 +36,20 @@ namespace ExameeGenerator.Domain
 
             var ordered = _examees.OrderBy(x => x.Order).ToList();
 
-            for (int i = 0; i < count; i++)
-            {
-                int newOrder = (i % 2 == 0)
-                    ? i / 2
-                    : count - 1 - (i / 2);
+            int left = 0;
+            int right = count - 1;
+            int newOrder = 0;
 
-                ordered[i].UpdateOrder(newOrder);
+            while (left <= right)
+            {
+                ordered[left].UpdateOrder(newOrder++);
+                left++;
+
+                if (left <= right)
+                {
+                    ordered[right].UpdateOrder(newOrder++);
+                    right--;
+                }
             }
         }
     }

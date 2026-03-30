@@ -38,6 +38,17 @@ namespace ExameeGenerator.Api.Endpoints
             .Produces<ExamDto>(StatusCodes.Status200OK)
             .Produces<ProblemDetails>(StatusCodes.Status404NotFound);
 
+            group.MapPost("/{id:guid}/reorder", async (
+                Guid id,
+                [FromServices] ReOrderExameeCommandHandler handler) =>
+            {
+                var dto = await handler.HandlAsync(new ReOrderExameeCommand(id));
+                return Results.Ok(dto);
+            })
+            .WithName("ReOrderExamee")
+            .Produces<ExamDto>(StatusCodes.Status200OK)
+            .Produces<ProblemDetails>(StatusCodes.Status404NotFound);
+
             return app;
         }
     }
