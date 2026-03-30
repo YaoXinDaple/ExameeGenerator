@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ExameeGenerator.Domain\ExameeGenerator.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
