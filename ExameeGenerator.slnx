@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ExameeGenerator.Api/ExameeGenerator.Api.csproj" />
+    <Project Path="src/ExameeGenerator.Application/ExameeGenerator.Application.csproj" />
+    <Project Path="src/ExameeGenerator.Domain/ExameeGenerator.Domain.csproj" />
+    <Project Path="src/ExameeGenerator.Infrastructure/ExameeGenerator.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ExameeGenerator.Tests/ExameeGenerator.Tests.csproj" />
+  </Folder>
+</Solution>
