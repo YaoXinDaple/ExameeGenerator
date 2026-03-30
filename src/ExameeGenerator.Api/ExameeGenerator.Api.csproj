@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Endpoints\" />
+    <ProjectReference Include="..\ExameeGenerator.Application\ExameeGenerator.Application.csproj" />
+    <ProjectReference Include="..\ExameeGenerator.Infrastructure\ExameeGenerator.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

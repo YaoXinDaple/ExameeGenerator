@@ -6,9 +6,10 @@ namespace ExameeGenerator.Application
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddDomain(this IServiceCollection services)
+        public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<CreateExamCommandHandler>();
+            services.AddScoped<ReOrderExameeCommandHandler>();
             services.AddScoped<GetExamByIdQueryHandler>();
 
             return services;

@@ -1,4 +1,5 @@
-﻿using ExameeGenerator.Domain.Shared;
+﻿using ExameeGenerator.Domain.Exceptions;
+using ExameeGenerator.Domain.Shared;
 
 namespace ExameeGenerator.Domain
 {
@@ -6,8 +7,14 @@ namespace ExameeGenerator.Domain
     {
         private Exam() { }
 
-        public Exam(Guid id) : base(id)
-        { }
+        public Exam(Guid id,string name) : base(id)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ValidationException(nameof(Name), "exam name cannot be empty");
+            }
+            Name = name;
+        }
 
         public string Name { get; private set; } = string.Empty;
 

@@ -4,12 +4,12 @@ namespace ExameeGenerator.Domain
 {
     internal class ExamFactory : IExamFactory
     {
-        public Exam Create(int count)
+        public Exam Create(int count,string name)
         {
             if (count < 20)
                 throw new InsufficientCountException("Examee count cannot less then 20!");
 
-            Exam exam = new Exam(Guid.NewGuid());
+            Exam exam = new Exam(Guid.NewGuid(),name);
             List<Examee> exameeList = new List<Examee>(count);
 
             for (int i = 0; i < count; i++)

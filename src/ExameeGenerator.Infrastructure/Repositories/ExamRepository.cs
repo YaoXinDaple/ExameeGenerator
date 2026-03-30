@@ -15,7 +15,9 @@ namespace ExameeGenerator.Infrastructure.Repositories
 
         public Task<Exam?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return _appDbContext.Exams.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return _appDbContext.Exams
+                .Include(e=>e.Examees)
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task SaveAsync(Exam entity, CancellationToken cancellationToken = default)

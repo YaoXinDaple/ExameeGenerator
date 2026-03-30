@@ -2,6 +2,6 @@
 {
     public interface IExamFactory
     {
-        Exam Create(int count);
+        Exam Create(int count, string name);
     }
 }

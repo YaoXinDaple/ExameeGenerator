@@ -4,7 +4,7 @@ using ExameeGenerator.Domain;
 
 namespace ExameeGenerator.Application.Commands
 {
-    public sealed record CreateExamCommand(int? Count);
+    public sealed record CreateExamCommand(int? Count,string ExamName);
 
     public sealed class CreateExamCommandHandler
     {
@@ -29,7 +29,7 @@ namespace ExameeGenerator.Application.Commands
                 exameeCount = command.Count.Value;
             }
 
-            var exam = _examFactory.Create(exameeCount);
+            var exam = _examFactory.Create(exameeCount, command.ExamName);
 
             await _examRepository.SaveAsync(exam, cancellationToken);
 

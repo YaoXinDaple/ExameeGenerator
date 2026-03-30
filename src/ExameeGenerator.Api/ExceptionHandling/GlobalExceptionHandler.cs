@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using ExameeGenerator.Domain.Exceptions;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExameeGenerator.Api.ExceptionHandling
@@ -16,7 +17,12 @@ namespace ExameeGenerator.Api.ExceptionHandling
         {
             _logger.LogError(exception.Message);
 
-            var statusCode = StatusCodes.Status500InternalServerError;
+            var (statusCode, title) = exception switch
+            {
+                ValidationException => (StatusCodes.Status400BadRequest, "Validation Error"),
+                NotFoundException => (StatusCodes.Status404NotFound, "Not Found"),
+                _ => (StatusCodes.Status500InternalServerError, "Internal Server Error")
+            };
 
             //ValidatationException
             //DomainException
@@ -25,7 +31,7 @@ namespace ExameeGenerator.Api.ExceptionHandling
             var problemDetails = new ProblemDetails
             {
                 Status = statusCode,
-                Title = exception.Message,
+                Title = title,
                 Detail = exception.Message,
                 Instance = httpContext.Request.Path
             };
