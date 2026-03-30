@@ -16,11 +16,11 @@ dotnet ef migrations add Init --context AppDbContext --output-dir Migrations
 ## 项目架构
 使用整洁架构搭建了项目骨架。Domain项目为核心，不依赖其他项目。Infrastructure项目依赖Application。
 
-Application中需要使用的第三方服务，通过定义接口由基础设置服务来实现。常用的一种端口适配器的模式。实现控制反转。
+Application中需要使用的第三方服务，通过定义接口由Infrastructure负责实现改接口。通过这种端口适配器模式实现控制反转。
 
 ORM框架使用的为EFCore。实体的Id使用的是默认Guid方案，真实项目中一般会使用GuidV7，或者自定义的有序Guid生成器。
 
-应用服务层使用了REPR 极简设计模式，实际项目中可以通过MidatoR，实现更近一步的解耦。
+应用服务层使用了REPR 极简设计模式，实际项目中可以通过MediatR，实现更近一步的解耦。
 
 ## 单元测试
 主要测试三部分内容
