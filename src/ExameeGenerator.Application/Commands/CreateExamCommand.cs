@@ -10,11 +10,16 @@ namespace ExameeGenerator.Application.Commands
     {
         private readonly IExamRepository _examRepository;
         private readonly IExamFactory _examFactory;
+        private readonly IThirdPartyService _thirdPartyService;
 
-        public CreateExamCommandHandler(IExamRepository examRepository, IExamFactory examFactory)
+        public CreateExamCommandHandler(
+            IExamRepository examRepository,
+            IExamFactory examFactory,
+            IThirdPartyService thirdPartyService)
         {
             _examRepository = examRepository;
             _examFactory = examFactory;
+            _thirdPartyService = thirdPartyService;
         }
 
         public async Task<ExamDto> HandleAsync(CreateExamCommand command, CancellationToken cancellationToken = default)
@@ -30,6 +35,8 @@ namespace ExameeGenerator.Application.Commands
             }
 
             var exam = _examFactory.Create(exameeCount, command.ExamName);
+
+            await _thirdPartyService.InvokeAsync(cancellationToken);
 
             await _examRepository.SaveAsync(exam, cancellationToken);
 

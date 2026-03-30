@@ -6,7 +6,7 @@ namespace ExameeGenerator.Infrastructure.Implementations
     {
         public Task<bool> HealthAsync(CancellationToken cancellationToken)
         {
-            return Task.FromResult(true);
+            return Task.FromResult(false);
         }
 
         public Task InvokeAsync(CancellationToken cancellationToken)

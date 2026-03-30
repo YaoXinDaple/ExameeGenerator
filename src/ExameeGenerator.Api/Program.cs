@@ -3,6 +3,9 @@ using ExameeGenerator.Api.ExceptionHandling;
 using ExameeGenerator.Application;
 using ExameeGenerator.Domain;
 using ExameeGenerator.Infrastructure;
+using ExameeGenerator.Infrastructure.HealthChecks;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,8 +47,30 @@ if (app.Environment.IsDevelopment())
 
 app.MapExamEndpoints();
 
-// 暴露健康检查端点
-//app.MapHealthChecks("/health");
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    Predicate = check =>
+        check.Tags.Contains(InfrastructureHealthCheckConstants.InfrastructureTag),
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
+
+        var payload = new
+        {
+            status = report.Status.ToString(),
+            checks = report.Entries.ToDictionary(
+                item => item.Key,
+                item => new
+                {
+                    status = item.Value.Status.ToString(),
+                    description = item.Value.Description,
+                    error = item.Value.Exception?.Message
+                })
+        };
+
+        await context.Response.WriteAsync(JsonSerializer.Serialize(payload));
+    }
+});
 
 app.Run();
 

@@ -22,8 +22,12 @@ namespace ExameeGenerator.Infrastructure
 
             // Health checks
             services.AddHealthChecks()
-                .AddDbContextCheck<AppDbContext>("database")
-                .AddCheck<ExamServiceHealthChecks>("third-party-services");
+                .AddDbContextCheck<AppDbContext>(
+                    InfrastructureHealthCheckConstants.DatabaseCheckName,
+                    tags: new[] { InfrastructureHealthCheckConstants.InfrastructureTag })
+                .AddCheck<ExamServiceHealthChecks>(
+                    InfrastructureHealthCheckConstants.ThirdPartyServicesCheckName,
+                    tags: new[] { InfrastructureHealthCheckConstants.InfrastructureTag });
 
             return services;
         }
